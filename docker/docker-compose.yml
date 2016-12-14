@@ -1,30 +1,30 @@
 version: '2'
 
 services:
-    mysql:
-        container_name: mysql
+    x_mysql:
+        container_name: x_mysql
         image: mysql:5.7
         ports:
-            - "3306:3306"
+            - "3307:3306"
         environment:
             - MYSQL_ROOT_PASSWORD=root
             - MYSQL_DATABASE=docker
-    php7:
-        container_name: php7
+    x_php7:
+        container_name: x_php7
         image: php:7.1.0-fpm
         links:
-            - mysql
+            - x_mysql
         ports:
             - 9000:9000
         volumes:
             - ..:/var/www/html
-    apache:
-        container_name: apache
+    x_apache:
+        container_name: x_apache
         build: apache
         ports:
             - 90:80
         links:
-            - mysql
-            - php7
+            - x_mysql
+            - x_php7
         volumes:
           - ..:/var/www/html
